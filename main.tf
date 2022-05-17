@@ -170,7 +170,7 @@ resource "aws_nat_gateway" "NATgw" {
 
 #creating Security group for VPC
 
-resource "aws_security_group" "Security_group" {
+resource "aws_security_group" "VPC_Security_group" {
   vpc_id      = aws_vpc.Main.id
   description = "Security group with no restrictions"
   name        = "DefaultSecurityGroup"
@@ -193,25 +193,25 @@ resource "aws_security_group" "Security_group" {
   ]
 }
 
-resource "aws_security_group" "SQS" {
-  name        = var.aws_security_group_SQS
-  vpc_id      = aws_vpc.Main.id
+# resource "aws_security_group" "SQS" {
+#   name        = var.aws_security_group_SQS
+#   vpc_id      = aws_vpc.Main.id
 
-  ingress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = [var.private_subnet1]
-  }
+#   ingress {
+#     from_port   = 0
+#     to_port     = 65535
+#     protocol    = "tcp"
+#     cidr_blocks = [var.private_subnet1]
+#   }
 
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = [var.private_subnet1]
-  }
+#   egress {
+#     from_port   = 0
+#     to_port     = 65535
+#     protocol    = "tcp"
+#     cidr_blocks = [var.private_subnet1]
+#   }
 
-  tags =    {
-      "Name" = "Fxlink-SQS-security_group"
-    }
-}
+#   tags =    {
+#       "Name" = "Fxlink-SQS-security_group"
+#     }
+# }

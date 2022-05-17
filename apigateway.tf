@@ -41,5 +41,5 @@ resource "aws_api_gateway_deployment" "Fxlink-Api_deploy" {
 resource "aws_api_gateway_stage" "Fxlink_Stage" {
   deployment_id = aws_api_gateway_deployment.Fxlink-Api_deploy.id
   rest_api_id   = aws_api_gateway_rest_api.Fxlink-Api.id
-  stage_name    = "f1"
+  stage_name    = "v1"
 }

@@ -27,13 +27,13 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   }
   tags = {
     Name        = "dynamodb-table-1"
-    Environment = "production"
+    Environment = "${terraform.workspace}"
   }
 }
 
 resource "aws_vpc_endpoint" "dynamodb" {
   vpc_id      = aws_vpc.Main.id
-  service_name = "com.amazonaws.us-east-1.dynamodb"
+  service_name = "com.amazonaws.ca-central-1.dynamodb"
   #todo- Security group
   tags = { 
     "Name" = "dynamodb-vpc-endpoint"
