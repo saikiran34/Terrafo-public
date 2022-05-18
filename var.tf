@@ -8,20 +8,20 @@ variable "private_subnet1" {}
 variable "private_subnet2" {}
 variable "private_subnet3" {}
 # variable "Environment" {}
-variable "bucket_name"{
-  default = "fxlinkdefault"
-  type = string
+variable "bucket_name" {
+  default     = "fxlinkdefault"
+  type        = string
   description = "s3_bucket"
 }
 
 #SQS
-variable "sqs_name"{
-  default = "sqs_name"
-  type = string
+variable "sqs_name" {
+  default     = "sqs_name"
+  type        = string
   description = "sqs_name"
 }
 
-variable "visibility_timeout_seconds"{
+variable "visibility_timeout_seconds" {
   description = "visibility_timeout_seconds"
   type        = number
   default     = "30"
@@ -33,13 +33,13 @@ variable "visibility_timeout_seconds"{
 #   default     = "86400"
 # }
 
-variable "max_message_size"{
+variable "max_message_size" {
   description = "max_message_size"
   type        = number
   default     = "262144"
 }
 
-variable "receive_wait_time_seconds"{
+variable "receive_wait_time_seconds" {
   description = "receive_wait_time_seconds"
   type        = number
   default     = "10"
@@ -50,19 +50,19 @@ variable "receive_wait_time_seconds"{
 #   default     = "10"
 # }
 
-variable "aws_security_group_SQS"{
+variable "aws_security_group_SQS" {
   description = "aws_security_group_SQS"
   type        = string
   default     = "Fxlink-SQS-security_group"
 }
 
-variable "aws_api_gateway_rest_api_title"{
+variable "aws_api_gateway_rest_api_title" {
   description = "aws_security_group_SQS"
   type        = string
   default     = "Fxlink-2.0-api_gateway"
 }
 
-variable "api_name"{
+variable "api_name" {
   description = "aws_security_group_SQS"
   type        = string
   default     = "Fxlink-2.0-api"

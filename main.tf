@@ -4,8 +4,8 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-resource "aws_vpc" "Main" {      # Creating VPC here
-  cidr_block = var.main_vpc_cidr # Defining the CIDR block use 10.0.0.0/24 for demo
+resource "aws_vpc" "Main" {                # Creating VPC here
+  cidr_block           = var.main_vpc_cidr # Defining the CIDR block use 10.0.0.0/24 for demo
   enable_dns_hostnames = true
   tags = {
     "Name" = "Fxlink-2.0"
@@ -14,27 +14,27 @@ resource "aws_vpc" "Main" {      # Creating VPC here
 
 # Create a Private Subnet                   # Creating Private Subnets
 resource "aws_subnet" "privatesubnet1" {
-  vpc_id     = aws_vpc.Main.id
-  cidr_block = var.private_subnet1 # CIDR block of private subnet1
-  availability_zone = data.aws_availability_zones.available.names[0]
+  vpc_id                  = aws_vpc.Main.id
+  cidr_block              = var.private_subnet1 # CIDR block of private subnet1
+  availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = false
   tags = {
     "Name" = "Fxlink-2.0-private1-${terraform.workspace}"
   }
 }
 resource "aws_subnet" "privatesubnet2" {
-  vpc_id     = aws_vpc.Main.id
-  cidr_block = var.private_subnet2 # CIDR block of private subnet2
-  availability_zone = data.aws_availability_zones.available.names[1]
+  vpc_id                  = aws_vpc.Main.id
+  cidr_block              = var.private_subnet2 # CIDR block of private subnet2
+  availability_zone       = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch = false
   tags = {
     "Name" = "Fxlink-2.0-private2-${terraform.workspace}"
   }
 }
 resource "aws_subnet" "privatesubnet3" {
-  vpc_id     = aws_vpc.Main.id
-  cidr_block = var.private_subnet3 # CIDR block of private subnets3
-  availability_zone = data.aws_availability_zones.available.names[2]
+  vpc_id                  = aws_vpc.Main.id
+  cidr_block              = var.private_subnet3 # CIDR block of private subnets3
+  availability_zone       = data.aws_availability_zones.available.names[2]
   map_public_ip_on_launch = false
   tags = {
     "Name" = "Fxlink-2.0-private3-${terraform.workspace}"
@@ -43,19 +43,19 @@ resource "aws_subnet" "privatesubnet3" {
 
 #Create a Public Subnets.
 resource "aws_subnet" "public_subnet1" { # Creating Public Subnets
-  vpc_id     = aws_vpc.Main.id
-  cidr_block = var.public_subnet1 # CIDR block of public subnets
+  vpc_id                  = aws_vpc.Main.id
+  cidr_block              = var.public_subnet1 # CIDR block of public subnets
   map_public_ip_on_launch = true
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone       = data.aws_availability_zones.available.names[0]
   tags = {
     "Name" = "Fxlink-2.0-public1-${terraform.workspace}"
   }
 }
 resource "aws_subnet" "public_subnet2" { # Creating Public Subnets
-  vpc_id     = aws_vpc.Main.id
-  cidr_block = var.public_subnet2 # CIDR block of public subnets
+  vpc_id                  = aws_vpc.Main.id
+  cidr_block              = var.public_subnet2 # CIDR block of public subnets
   map_public_ip_on_launch = true
-  availability_zone = data.aws_availability_zones.available.names[1]
+  availability_zone       = data.aws_availability_zones.available.names[1]
   tags = {
     "Name" = "Fxlink-2.0-public2-${terraform.workspace}"
   }
@@ -157,7 +157,7 @@ resource "aws_eip" "ElasticIP" {
   depends_on = [
     aws_internet_gateway.IGW
   ]
-  
+
 }
 # Creating the NAT Gateway using subnet_id and allocation_id
 resource "aws_nat_gateway" "NATgw" {
@@ -181,37 +181,37 @@ resource "aws_security_group" "VPC_Security_group" {
       cidr_blocks = [
         "0.0.0.0/0",
       ]
-      from_port = 0
-      to_port   = 0
-      protocol  = "-1"
-      self      = false
-      description = ""
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      self             = false
+      description      = ""
       ipv6_cidr_blocks = []
-      security_groups = []
-      prefix_list_ids = []
+      security_groups  = []
+      prefix_list_ids  = []
     },
   ]
 }
 
-# resource "aws_security_group" "SQS" {
-#   name        = var.aws_security_group_SQS
-#   vpc_id      = aws_vpc.Main.id
+resource "aws_security_group" "SQS" {
+  name   = var.aws_security_group_SQS
+  vpc_id = aws_vpc.Main.id
 
-#   ingress {
-#     from_port   = 0
-#     to_port     = 65535
-#     protocol    = "tcp"
-#     cidr_blocks = [var.private_subnet1]
-#   }
+  ingress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = [var.private_subnet1]
+  }
 
-#   egress {
-#     from_port   = 0
-#     to_port     = 65535
-#     protocol    = "tcp"
-#     cidr_blocks = [var.private_subnet1]
-#   }
+  egress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = [var.private_subnet1]
+  }
 
-#   tags =    {
-#       "Name" = "Fxlink-SQS-security_group"
-#     }
-# }
+  tags = {
+    "Name" = "Fxlink-SQS-security_group"
+  }
+}

@@ -32,15 +32,15 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
 }
 
 resource "aws_vpc_endpoint" "dynamodb" {
-  vpc_id      = aws_vpc.Main.id
+  vpc_id       = aws_vpc.Main.id
   service_name = "com.amazonaws.ca-central-1.dynamodb"
   #todo- Security group
-  tags = { 
+  tags = {
     "Name" = "dynamodb-vpc-endpoint"
   }
 }
 
 resource "aws_vpc_endpoint_route_table_association" "DynodB_RT" {
-    route_table_id = aws_route_table.Fxlink_Private1_RT.id
-    vpc_endpoint_id = aws_vpc_endpoint.dynamodb.id
+  route_table_id  = aws_route_table.Fxlink_Private1_RT.id
+  vpc_endpoint_id = aws_vpc_endpoint.dynamodb.id
 }
